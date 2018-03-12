@@ -130,3 +130,15 @@ label {
   border: none;
 }
 
+
+@media only screen and (max-width: 950px) { 
+  .hex-code {
+    font-size: 1.5em;
+  }
+}
+
+@media only screen and (max-width: 450px) { 
+  .hex-code {
+    font-size: 1em;
+  }
+}
