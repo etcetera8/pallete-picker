@@ -35,10 +35,31 @@ main {
 }
 
 .color {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
   border: 1px solid black;
   height: 450px;
   width: 20%;
-  background: #white;
+  background: rgba(146, 196, 240, 0.434);
   margin: 0;
+}
+
+.hex-code {
+  color: #fff;
+  font-size: 2.5em;
+}
+
+.lock-btn {
+  height: 35px;
+  width: 35px;
+  margin-bottom: 25px;
+  display: block;
+  border: none;
+  border-radius: 50%;
+  color: #fff;
+  margin: 10px auto;
+  background: rgba(0, 0, 0, 0.4);
 }
 
