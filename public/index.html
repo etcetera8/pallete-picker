@@ -23,7 +23,44 @@
       <div class="color"><span class="hex-code">#342582</span></span><button class="lock-btn"><i class="fas fa-lock-open"></i></button></div>
     </section>
     <button id="generate">New Pallete</button>
+    <form id="new-pallete-form">
+      <select name="pallete-folders">
+        <option value="pallete 1">Pallete 1</option>
+        <option value="pallete 2">Pallete 2</option>
+        <input type="text" placeholder="New project name" />
+        <button class="new-pallete-btn" type="submit">Save Pallete</button>
+      </select>
+    </form>
   </main>
+
+  <section id="projects">
+    <form id="new-project-form">
+      <label>Create a new project: </label>
+      <input type="text" placeholder="New project name">
+      <button class = "new-pallete-btn" type="submit">Save Project</button>
+    </form>
+
+    <div id="saved-projects">
+      <article class="saved-project">
+        <h3>Project 1</h3>
+        <div id="thumbnails">
+          <span>name of pallete</span>
+          <div class="thumbnail-color"></div>
+          <div class="thumbnail-color"></div>
+          <div class="thumbnail-color"></div>
+          <div class="thumbnail-color"></div>
+          <div class="thumbnail-color"></div>
+          <button class="delete-pallete">
+            <i class="fas fa-trash-alt delete-pallete"></i>
+          </button>
+        </div>
+      </article>
+
+    </div>
+
+  </section>
+
+  
 
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
   <script src="./js/scripts.js"></script>
