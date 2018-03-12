@@ -63,3 +63,20 @@ main {
   background: rgba(0, 0, 0, 0.4);
 }
 
+#generate {
+  width: 125px;
+  height: 65px;
+  margin-top: 25px;
+  background: none;
+  border: 2px solid #fff;
+  border-style: solid;
+  font-size: 1em;
+  color: #fff;
+  transition: color .5s, border-color .5s;
+}
+
+#generate:hover {
+  color: blue;
+  border-color: blue;
+}
+
