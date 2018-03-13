@@ -26,8 +26,25 @@ $(document).on('click', '.delete-palette', (event) => {
 const addNewProject = (e) => {
   e.preventDefault();
   const projectName = $('#project-name').val()
-  console.log(projectName);
   
+  fetch('/api/v1/projects', {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json, text/plain',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({"project_name": projectName})
+  })
+  .then( (response) => {
+    return response.json()
+  })
+  .then(results => {
+    console.log(results);
+  })
+  .catch( error => {
+    console.log('request failed', error);
+  })
+
   $('#project-name').val('');
 }
 

@@ -35,10 +35,15 @@ app.get('/api/v1/projects', (request, response) => {
   response.json({projects})
 })
 
+let globalId = 1;
+
 app.post('/api/v1/projects', (request, response) => {
-  const id = Date.now();
-  const { project_name, palettes } = request.body;
-  const project = { id, project_name, palettes }
+  const id = globalId;
+  globalId+=1;
+  console.log(globalId);
+  
+  const { project_name } = request.body;
+  const project = { id, project_name }
   app.locals.projects.push(project);
   response.status(201).json(project)
 })
