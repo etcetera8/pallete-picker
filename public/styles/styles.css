@@ -15,6 +15,9 @@ header {
 button {
   cursor: pointer;
 }
+button:focus {
+  outline:0;
+}
 
 #title {
   text-align: center;
@@ -32,7 +35,7 @@ main {
   border-bottom: 1px solid #fff;
 }
 
-#pallete-display-main {
+#palette-display-main {
   display: flex;
   width: 95%;
   background: rgba(255, 255, 255, 0.5)
@@ -96,7 +99,7 @@ main {
   transition: color .5s, border-color .5s;
 }
 
-#generate:hover, .new-pallete-btn:hover {
+#generate:hover, .new-palette-btn:hover {
   color: rgb(0, 200, 255);
   border-color: rgb(0, 200, 255);
 }
@@ -105,7 +108,7 @@ input {
   margin: 0px 30px 25px 25px;
 }
 
-.new-pallete-btn {
+.new-btn {
   background: none;
   border: 2px solid #fff;
   color: #fff;
@@ -142,10 +145,15 @@ label {
   background: green;
 }
 
-.delete-pallete {
+.delete-palette {
   background: none;
-  color: #fff;
   border: none;
+  height: 35px;
+  width: 35px;
+  background-image: url('../assets/trash.png');
+  background-size: 60%;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 

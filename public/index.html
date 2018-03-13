@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Pallete Picker</title>
+  <title>palette Picker</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" media="screen" href="./styles/styles.css" />
   <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
@@ -11,24 +11,24 @@
 </head>
 <body>
   <header>
-    <h1 id="title">Pallete Picker</h1>
+    <h1 id="title">palette Picker</h1>
   </header>
 
   <main>
-    <section id="pallete-display-main">
+    <section id="palette-display-main">
       <div class="color unlocked" id="c1"><span class="hex-code">#342582</span></span><button class="lock-btn unlock"></i></button></div>
       <div class="color unlocked" id="c2"><span class="hex-code">#342582</span></span><button class="lock-btn unlock"></i></button></div>
       <div class="color unlocked" id="c3"><span class="hex-code">#342582</span></span><button class="lock-btn unlock"></i></button></div>
       <div class="color unlocked" id="c4"><span class="hex-code">#342582</span></span><button class="lock-btn unlock"></i></button></div>
       <div class="color unlocked" id="c5"><span class="hex-code">#342582</span></span><button class="lock-btn unlock"></i></button></div>
     </section>
-    <button id="generate">New Pallete</button>
-    <form id="new-pallete-form">
-      <select name="pallete-folders">
-        <option value="pallete 1">Pallete 1</option>
-        <option value="pallete 2">Pallete 2</option>
-        <input type="text" placeholder="New project name" />
-        <button class="new-pallete-btn" type="submit">Save Pallete</button>
+    <button id="generate">New palette</button>
+    <form id="new-palette-form">
+      <select name="palette-folders">
+        <option value="palette 1">Palette 1</option>
+        <option value="palette 2">Palette 2</option>
+        <input id="palette-name" type="text" placeholder="New project name" />
+        <button class="new-btn new-palette-btn" type="submit">Save Palette</button>
       </select>
     </form>
   </main>
@@ -36,8 +36,8 @@
   <section id="projects">
     <form id="new-project-form">
       <label>Create a new project: </label>
-      <input type="text" placeholder="New project name">
-      <button class = "new-pallete-btn" type="submit">Save Project</button>
+      <input id="project-name" type="text" placeholder="New project name">
+      <button class = "new-btn new-project-btn" type="submit">Save Project</button>
     </form>
 
     <div id="saved-projects">

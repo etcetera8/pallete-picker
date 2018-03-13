@@ -1,4 +1,6 @@
 const generate = $('#generate');
+const newPalette = $('.new-palette-btn');
+const newProject = $('.new-project-btn');
 
 window.onload = async () => {
   generatePalette();
@@ -9,6 +11,38 @@ window.onload = async () => {
 }
 
 generate.click(() => generatePalette());
+newPalette.click((e) => addNewPalette(e))
+newProject.click((e)=> addNewProject(e))
+
+$(document).on('click', '.lock-btn', (event) => {
+  $(event.target).toggleClass('lock unlock')
+})
+
+$(document).on('click', '.delete-palette', (event) => {
+  console.log(event.target);
+  
+})
+
+const addNewProject = (e) => {
+  e.preventDefault();
+  const projectName = $('#project-name').val()
+  console.log(projectName);
+  
+  $('#project-name').val('');
+}
+
+const addNewPalette = (e) => {
+  e.preventDefault();
+  const project = $('select').val();
+  const paletteName = $('#palette-name').val();
+  const hexCodes = Array.from(document.querySelectorAll('.hex-code')).map(code => {
+    return code.innerHTML
+  })
+  const newPalette = { name: paletteName, hex_codes: [...hexCodes] }
+  console.log(project, newPalette);
+
+  $('#palette-name').val('');
+}
 
 const generatePalette = () => {
   const palleteArray = document.querySelectorAll('.unlocked');
@@ -28,9 +62,6 @@ window.onkeydown = function (e) {
   }
 };  
 
-$(document).on('click', '.lock-btn', (event) => {
-  $(event.target).toggleClass('lock unlock')
-})
 
 const generateHex = () => {
   return '#' + (Math.random() * 0xFFFFFF << 0).toString(16).toUpperCase();
@@ -42,14 +73,13 @@ const createProjectThumbnail = async (projectData) => {
       `<article class="saved-project">
           <h3>${project.project_name}</h3>
             <div id="thumbnails">
-              <span>${project.palettes[0].palette_name}</span>
-              <div class="thumbnail-color" style="background-color:${project.palettes[0].hex_codes[0]};"></div>
-              <div class="thumbnail-color" style="background-color:${project.palettes[0].hex_codes[1]};"></div>
-              <div class="thumbnail-color" style="background-color:${project.palettes[0].hex_codes[2]};"></div>
-              <div class="thumbnail-color" style="background-color:${project.palettes[0].hex_codes[3]};"></div>
-              <div class="thumbnail-color" style="background-color:${project.palettes[0].hex_codes[4]};"></div>
-              <button class="delete-pallete">
-                <i class="fas fa-trash-alt delete-pallete"></i>
+              <span>fake</span>
+              <div class="thumbnail-color" style="background-color:yellow;"></div>
+              <div class="thumbnail-color" style="background-color:yellow;"></div>
+              <div class="thumbnail-color" style="background-color:yellow;"></div>
+              <div class="thumbnail-color" style="background-color:yellow;"></div>
+              <div class="thumbnail-color" style="background-color:yellow;"></div>
+              <button class="delete-palette">
               </button>
             </div>
         </article>`
