@@ -33,7 +33,6 @@ const lockColor = () => {
 }
 
 $(window).click((e) => {
-  console.log(e.target);
-  
+  console.log(e.target.className);
 })
 
