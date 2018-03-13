@@ -6,9 +6,17 @@ const dropDown = $('select');
 window.onload = async () => {
   generatePalette();
   const response = await fetch('/api/v1/projects')
-  const data = await response.json();  
-  console.log(data);
-  createProjectThumbnail(data)
+  const projects = await response.json();  
+  console.log(projects);
+  const ids = await projects.projects.map( async (project) => {
+    console.log(project.id);
+    const response = await fetch(`api/v1/palettes/${project.id}`)
+    const palette = await response.json();
+    console.log(palette);
+    
+
+  })
+  createProjectThumbnail(projects)
 }
 
 generate.click(() => generatePalette());

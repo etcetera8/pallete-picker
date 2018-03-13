@@ -9,8 +9,7 @@ app.locals.title = 'Palette Picker';
 app.locals.projects = [
   {
     "id": "1",
-    "project_name": "Project 2", 
-    "palettes": true
+    "project_name": "Project 2"
   }
 ];
 
@@ -23,16 +22,30 @@ app.locals.palettes = [
   }
 ];
 
-app.get('/api/v1/palettes', (request, response) => {
+app.get('/api/v1/palettes/', (request, response) => {
   const { palettes } = app.locals;
 
-  response.json({palettes})
+  response.json({ palettes })
 })
+
+
+app.get('/api/v1/palettes/:id/', (request, response) => {
+  const { id } = request.params;
+
+  const palette = app.locals.palettes.find( palette => palette.project_key === id);
+  if (palette) {
+    console.log(palette);
+    
+    response.status(200).json(palette)
+  } else {
+    response.sendStatus(404)
+  }
+});
 
 app.get('/api/v1/projects', (request, response) => {
   const { projects } = app.locals;
 
-  response.json({projects})
+  response.json({ projects })
 })
 
 let globalId = 1;
