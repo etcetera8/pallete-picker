@@ -24,6 +24,14 @@ app.get('/api/v1/projects', (request, response) => {
   response.json({projects})
 })
 
+app.post('/api/v1/projects', (request, response) => {
+  const id = Date.now();
+  const { project_name, palettes } = request.body;
+  const project = { id, project_name, palettes }
+  app.locals.projects.push(project);
+  response.status(201).json(project)
+})
+
 app.listen(app.get('port'), () => {
   console.log(`${app.locals.title} server running on port 3000`); 
 })
