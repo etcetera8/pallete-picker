@@ -71,6 +71,20 @@ main {
   background: rgba(0, 0, 0, 0.4);
 }
 
+.unlock {
+  background-image: url('../assets/unlock.png');
+  background-size: 60%;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.lock {
+  background-image: url('../assets/lock.png');
+  background-size: 60%;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
 #generate {
   width: 125px;
   height: 65px;
