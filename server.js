@@ -9,6 +9,10 @@ app.locals.title = 'Palette Picker';
 app.locals.projects = [
   {
     "id": "1",
+    "project_name": "Project 1"
+  },
+  {
+    "id": "2",
     "project_name": "Project 2"
   }
 ];
@@ -18,6 +22,12 @@ app.locals.palettes = [
     "id": "1234",
     "palette_name": "not fun stuff",
     "hex_codes": ["#000", "#111", "#fff", "#555", "#321"],
+    "project_key": "1"
+  },
+  { 
+    "id": "12345",
+    "palette_name": "fun stuff",
+    "hex_codes": ["#ac468b", "#fe55d", "#26e425", "#fc133", "#f25d90"],
     "project_key": "1"
   }
 ];
@@ -32,7 +42,7 @@ app.get('/api/v1/palettes/', (request, response) => {
 app.get('/api/v1/palettes/:id/', (request, response) => {
   const { id } = request.params;
 
-  const palette = app.locals.palettes.find( palette => palette.project_key === id);
+  const palette = app.locals.palettes.filter( palette => palette.project_key === id);
   if (palette) {
     console.log(palette);
     

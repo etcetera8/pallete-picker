@@ -7,16 +7,22 @@ window.onload = async () => {
   generatePalette();
   const response = await fetch('/api/v1/projects')
   const projects = await response.json();  
-  console.log(projects);
-  const ids = await projects.projects.map( async (project) => {
-    console.log(project.id);
+  
+  const palettes = await getPalettes(projects.projects);
+  console.log(palettes);
+  
+  createProjectThumbnail(projects);
+  createPaletteThumbnails(palettes);
+}
+
+const getPalettes = async (projects) => {
+  const ids = await projects.map(async (project) => {
     const response = await fetch(`api/v1/palettes/${project.id}`)
     const palette = await response.json();
-    console.log(palette);
-    
-
+    return await palette
   })
-  createProjectThumbnail(projects)
+  const palettes = await Promise.all(ids);
+  return palettes[0]
 }
 
 generate.click(() => generatePalette());
@@ -26,7 +32,6 @@ newProject.click((e)=> addNewProject(e))
 $('select').focus( async () => {
   const projectNames = await fetch('/api/v1/projects')
   const data = await projectNames.json();
-  console.log(data);
   data.projects.forEach(project => {
     dropDown.append($(`<option>${project.project_name}</option>`).val(`${project.id}`))
   })
@@ -104,20 +109,12 @@ const generateHex = () => {
 const createProjectThumbnail = async (projectData) => {
   const templates = projectData.projects.map(project => {
     const template = 
-      `<article class="saved-project">
+      `<article id=${project.id} class="saved-project">
           <h3>${project.project_name}</h3>
             <div id="thumbnails">
-              <span>fake</span>
-              <div class="thumbnail-color" style="background-color:yellow;"></div>
-              <div class="thumbnail-color" style="background-color:yellow;"></div>
-              <div class="thumbnail-color" style="background-color:yellow;"></div>
-              <div class="thumbnail-color" style="background-color:yellow;"></div>
-              <div class="thumbnail-color" style="background-color:yellow;"></div>
-              <button class="delete-palette">
-              </button>
             </div>
         </article>`
-        return template
+    return template
   })
   console.log(templates);
   templates.forEach(template => {
@@ -125,4 +122,28 @@ const createProjectThumbnail = async (projectData) => {
 
   })
 }
+
+const createPaletteThumbnails = async (palettes) => {
+  palettes.forEach(palette => {
+    console.log(palette);
+    
+    const { palette_name } = palette;
+    const template = 
+      `<span>${palette_name}</span>
+      <div class="thumbnail-color" style="background-color:${palette.hex_codes[0]};"></div>
+      <div class="thumbnail-color" style="background-color:${palette.hex_codes[1]};"></div>
+      <div class="thumbnail-color" style="background-color:${palette.hex_codes[2]};"></div>
+      <div class="thumbnail-color" style="background-color:${palette.hex_codes[3]};"></div>
+      <div class="thumbnail-color" style="background-color:${palette.hex_codes[4]};"></div>
+      <button class="delete-palette"></button>`
+      console.log(template);
+      $(`#${palette.project_key}`).append(template)
+  
+    })
+
+    
+}
+
+
+
 
