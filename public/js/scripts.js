@@ -32,7 +32,7 @@ const lockColor = () => {
   console.log('locked'); 
 }
 
-$(window).click((e) => {
-  console.log(e.target.className);
+$(document).on('click', '.lock-btn', (event) => {
+  $(event.target).toggleClass('lock unlock')
 })
 
