@@ -1,6 +1,8 @@
 const generate = $('#generate');
+//$(`#${color.id}`).find('button');
 
-window.onload = () => {
+
+const lock = window.onload = () => {
   generatePalette();
 }
 
@@ -25,4 +27,13 @@ generate.click(() => generatePalette());
 const generateHex = () => {
   return '#' + (Math.random() * 0xFFFFFF << 0).toString(16).toUpperCase();
 }
+
+const lockColor = () => {
+  console.log('locked'); 
+}
+
+$(window).click((e) => {
+  console.log(e.target);
+  
+})
 
