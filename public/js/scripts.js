@@ -1,6 +1,7 @@
 const generate = $('#generate');
 const newPalette = $('.new-palette-btn');
 const newProject = $('.new-project-btn');
+const dropDown = $('select');
 
 window.onload = async () => {
   generatePalette();
@@ -14,6 +15,15 @@ generate.click(() => generatePalette());
 newPalette.click((e) => addNewPalette(e))
 newProject.click((e)=> addNewProject(e))
 
+$('select').focus( async () => {
+  const projectNames = await fetch('/api/v1/projects')
+  const data = await projectNames.json();
+  console.log(data);
+  data.projects.forEach(project => {
+    dropDown.append($(`<option>${project.project_name}</option>`).val(`${project.id}`))
+  })
+})
+
 $(document).on('click', '.lock-btn', (event) => {
   $(event.target).toggleClass('lock unlock')
 })
@@ -25,7 +35,7 @@ $(document).on('click', '.delete-palette', (event) => {
 
 const addNewProject = (e) => {
   e.preventDefault();
-  const projectName = $('#project-name').val()
+  const projectName = $('#project-name').val();
   
   fetch('/api/v1/projects', {
     method: 'POST',
@@ -78,7 +88,6 @@ window.onkeydown = function (e) {
     generatePalette();
   }
 };  
-
 
 const generateHex = () => {
   return '#' + (Math.random() * 0xFFFFFF << 0).toString(16).toUpperCase();
