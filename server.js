@@ -14,6 +14,10 @@ app.locals.projects = [
   {
     "id": "2",
     "project_name": "Project 2"
+  },
+  {
+    "id": "3",
+    "project_name": "Project 3"
   }
 ];
 
@@ -35,7 +39,13 @@ app.locals.palettes = [
     "palette_name": "sequence",
     "hex_codes": ["#bc568b", "#ce75d", "#36b425", "#fc133", "#114346"],
     "project_key": "2"
-  }
+  },
+  {
+    "id": "2345",
+    "palette_name": "greeenies",
+    "hex_codes": ["#ce75a", "#ce75d", "#36b425", "#fc133", "#00a"],
+    "project_key": "3"
+  },
 ];
 
 app.get('/api/v1/palettes/', (request, response) => {
