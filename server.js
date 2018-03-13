@@ -12,7 +12,7 @@ app.locals.projects = [
     "project_name": "Project 2", 
     "palettes": [
       { "palette_name": "fun n' stuff",
-        "hex_codes": ["#000, #111, #fff, #555, #321"]
+        "hex_codes": ["#000", "#111", "#fff", "#555", "#321"]
       }
     ]
   }
@@ -21,7 +21,7 @@ app.locals.projects = [
 app.get('/api/v1/projects', (request, response) => {
   const { projects } = app.locals;
 
-  response.json(projects)
+  response.json({projects})
 })
 
 app.listen(app.get('port'), () => {
