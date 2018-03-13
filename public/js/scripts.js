@@ -7,9 +7,7 @@ window.onload = async () => {
   generatePalette();
   const response = await fetch('/api/v1/projects')
   const projects = await response.json();  
-  
   const palettes = await getPalettes(projects.projects);
-  console.log(palettes);
   
   createProjectThumbnail(projects);
   createPaletteThumbnails(palettes);
@@ -22,7 +20,7 @@ const getPalettes = async (projects) => {
     return await palette
   })
   const palettes = await Promise.all(ids);
-  return palettes[0]
+  return palettes
 }
 
 generate.click(() => generatePalette());
@@ -107,39 +105,31 @@ const generateHex = () => {
 }
 
 const createProjectThumbnail = async (projectData) => {
-  const templates = projectData.projects.map(project => {
+  projectData.projects.forEach(project => {
     const template = 
       `<article id=${project.id} class="saved-project thumbnails">
           <h3>${project.project_name}</h3>
         </article>`
-    return template
-  })
-  console.log(templates);
-  templates.forEach(template => {
-    $('#projects').append(template)
-
+      $('#projects').append(template)
   })
 }
 
 const createPaletteThumbnails = async (palettes) => {
-  palettes.forEach(palette => {
-    console.log(palette);
-    
-    const { palette_name } = palette;
-    const template = 
-      `<span>${palette_name}</span>
-      <div id="thumbnails">
-        <div class="thumbnail-color" style="background-color:${palette.hex_codes[0]};"></div>
-        <div class="thumbnail-color" style="background-color:${palette.hex_codes[1]};"></div>
-        <div class="thumbnail-color" style="background-color:${palette.hex_codes[2]};"></div>
-        <div class="thumbnail-color" style="background-color:${palette.hex_codes[3]};"></div>
-        <div class="thumbnail-color" style="background-color:${palette.hex_codes[4]};"></div>
-        <button class="delete-palette"></button>
-      </div>`
-      
-      console.log(template);
+  palettes.forEach(project => {
+    project.forEach(palette => {      
+      const { palette_name } = palette;
+      const template = 
+        `<span>${palette_name}</span>
+        <div id="thumbnails">
+          <div class="thumbnail-color" style="background-color:${palette.hex_codes[0]};"></div>
+          <div class="thumbnail-color" style="background-color:${palette.hex_codes[1]};"></div>
+          <div class="thumbnail-color" style="background-color:${palette.hex_codes[2]};"></div>
+          <div class="thumbnail-color" style="background-color:${palette.hex_codes[3]};"></div>
+          <div class="thumbnail-color" style="background-color:${palette.hex_codes[4]};"></div>
+          <button class="delete-palette"></button>
+        </div>`
       $(`#${palette.project_key}`).append(template)
-  
+    })
     })
 
     
