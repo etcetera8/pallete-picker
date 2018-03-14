@@ -54,10 +54,27 @@ app.get('/api/v1/palettes/', (request, response) => {
   response.json({ palettes })
 })
 
+app.delete('/api/v1/palettes/:id', (request, response) => {
+  const { id } = request.params;
+  const { palette_id } = request.headers
+  console.log("Im the id that was clicked", palette_id);
+
+  const newPalettes = app.locals.palettes.filter( (palette, index) => {
+    console.log(palette.id === palette_id);
+    return palette.id != palette_id;
+  } )
+  console.log(newPalettes);
+  app.locals.palettes = newPalettes
+  
+})
+
+app.get('/api/v1/palette/:id/', (request, response) => {
+  const { id } = request.params;
+})
 
 app.get('/api/v1/palettes/:id/', (request, response) => {
   const { id } = request.params;
-
+  
   const palette = app.locals.palettes.filter( palette => palette.project_key === id);
   if (palette) {
     console.log(palette);
