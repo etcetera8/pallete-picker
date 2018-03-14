@@ -13,16 +13,6 @@ window.onload = async () => {
   createPaletteThumbnails(palettes);
 }
 
-const getPalettes = async (projects) => {
-  const ids = await projects.map(async (project) => {
-    const response = await fetch(`api/v1/palettes/${project.id}`)
-    const palette = await response.json();
-    return await palette
-  })
-  const palettes = await Promise.all(ids);
-  return palettes
-}
-
 generate.click(() => generatePalette());
 newPalette.click((e) => addNewPalette(e))
 newProject.click((e)=> addNewProject(e))
@@ -41,7 +31,6 @@ $(document).on('click', '.lock-btn', (event) => {
 
 $(document).on('click', '.delete-palette', (event) => {
   console.log(event.target);
-  
 })
 
 const addNewProject = (e) => {
@@ -102,6 +91,16 @@ window.onkeydown = function (e) {
 
 const generateHex = () => {
   return '#' + (Math.random() * 0xFFFFFF << 0).toString(16).toUpperCase();
+}
+
+const getPalettes = async (projects) => {
+  const ids = await projects.map(async (project) => {
+    const response = await fetch(`api/v1/palettes/${project.id}`)
+    const palette = await response.json();
+    return await palette;
+  })
+  const palettes = await Promise.all(ids);
+  return palettes;
 }
 
 const createProjectThumbnail = async (projectData) => {

@@ -74,7 +74,7 @@ app.get('/api/v1/projects', (request, response) => {
   response.json({ projects })
 })
 
-let globalId = 1;
+let globalId = 4;
 
 app.post('/api/v1/projects', (request, response) => {
   const id = globalId;
