@@ -5,12 +5,8 @@ const dropDown = $('select');
 
 window.onload = async () => {
   generatePalette();
-  const response = await fetch('/api/v1/projects')
-  const projects = await response.json();  
-  const palettes = await getPalettes(projects.projects);
   
-  createProjectThumbnail(projects);
-  createPaletteThumbnails(palettes);
+  await createProjectThumbnail();
 }
 
 generate.click(() => generatePalette());
@@ -147,32 +143,43 @@ const getPalettes = async (projects) => {
   return palettes;
 }
 
-const createProjectThumbnail = async (projectData) => {
-  projectData.projects.forEach(project => {
+const createProjectThumbnail = async () => {
+  const response = await fetch('/api/v1/projects')
+  const projects = await response.json(); 
+  
+  projects.projects.forEach(project => {
     const template = 
       `<article id=${project.id} class="saved-project thumbnails">
           <h3>${project.project_name}</h3>
         </article>`
-      $('#projects').append(template)
+      $('#saved-projects').append(template)
   })
+
+  const palettes = await getPalettes(projects.projects);
+  createPaletteThumbnails(palettes);
+
+  
 }
 
 const createPaletteThumbnails = async (palettes) => {
+  
   palettes.forEach(project => {
     project.forEach(palette => { 
           
       const { palette_name } = palette;
       const template = 
         `<div id=${palette.id}>
-          <span>${palette_name}</span>
+          <section class='title-align'>
+            <span class="palette-title">${palette_name}</span>
+            </section>
+            <button id=${palette.project_key} class="delete-palette"></button>
           <div id="thumbnails">
             <div class="thumbnail-color" style="background-color:${palette.hex_codes[0]};"></div>
             <div class="thumbnail-color" style="background-color:${palette.hex_codes[1]};"></div>
             <div class="thumbnail-color" style="background-color:${palette.hex_codes[2]};"></div>
             <div class="thumbnail-color" style="background-color:${palette.hex_codes[3]};"></div>
             <div class="thumbnail-color" style="background-color:${palette.hex_codes[4]};"></div>
-            </div>'
-          <button id=${palette.project_key} class="delete-palette"></button>
+            </div>
         </div>`
       $(`#${palette.project_key}`).append(template)
     })
