@@ -31,19 +31,19 @@ app.locals.palettes = [
   { 
     "id": "12345",
     "palette_name": "fun stuff",
-    "hex_codes": ["#ac468b", "#fe55d", "#26e425", "#fc133", "#f25d90"],
+    "hex_codes": ["#ac468b", "#fe55de", "#26e425", "#fc133e", "#f25d90"],
     "project_key": "1"
   },
   {
     "id": "234",
     "palette_name": "sequence",
-    "hex_codes": ["#bc568b", "#ce75d", "#36b425", "#fc133", "#114346"],
+    "hex_codes": ["#bc568b", "#ce75de", "#36b425", "#fc133e", "#114346"],
     "project_key": "2"
   },
   {
     "id": "2345",
     "palette_name": "greeenies",
-    "hex_codes": ["#ce75a", "#ce75d", "#36b425", "#fc133", "#00a"],
+    "hex_codes": ["#ce75ae", "#ce75de", "#36b425", "#fc133e", "#00a"],
     "project_key": "3"
   },
 ];

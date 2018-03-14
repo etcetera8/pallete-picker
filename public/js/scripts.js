@@ -5,12 +5,8 @@ const dropDown = $('select');
 
 window.onload = async () => {
   generatePalette();
-  const response = await fetch('/api/v1/projects')
-  const projects = await response.json();  
-  const palettes = await getPalettes(projects.projects);
   
-  createProjectThumbnail(projects);
-  createPaletteThumbnails(palettes);
+  await createProjectThumbnail();
 }
 
 generate.click(() => generatePalette());
@@ -147,17 +143,26 @@ const getPalettes = async (projects) => {
   return palettes;
 }
 
-const createProjectThumbnail = async (projectData) => {
-  projectData.projects.forEach(project => {
+const createProjectThumbnail = async () => {
+  const response = await fetch('/api/v1/projects')
+  const projects = await response.json(); 
+  
+  projects.projects.forEach(project => {
     const template = 
       `<article id=${project.id} class="saved-project thumbnails">
           <h3>${project.project_name}</h3>
         </article>`
       $('#saved-projects').append(template)
   })
+
+  const palettes = await getPalettes(projects.projects);
+  createPaletteThumbnails(palettes);
+
+  
 }
 
 const createPaletteThumbnails = async (palettes) => {
+  
   palettes.forEach(project => {
     project.forEach(palette => { 
           
