@@ -54,14 +54,23 @@ app.get('/api/v1/palettes/', (request, response) => {
   response.json({ palettes })
 })
 
+app.delete('/api/v1/palettes/:id', (request, response) => {
+  const { id } = request.params;
+  const { palette_id } = request.headers
+  const newPalettes = app.locals.palettes.filter( (palette, index) => palette.id != palette_id)
+  app.locals.palettes = newPalettes;
+  response.status(202).json(newPalette);
+})
+
+app.get('/api/v1/palette/:id/', (request, response) => {
+  const { id } = request.params;
+})
 
 app.get('/api/v1/palettes/:id/', (request, response) => {
   const { id } = request.params;
-
+  
   const palette = app.locals.palettes.filter( palette => palette.project_key === id);
   if (palette) {
-    console.log(palette);
-    
     response.status(200).json(palette)
   } else {
     response.sendStatus(404)
@@ -78,13 +87,17 @@ let globalId = 4;
 
 app.post('/api/v1/projects', (request, response) => {
   const id = globalId;
-  globalId+=1;
-  console.log(globalId);
+  globalId += 1;
   
   const { project_name } = request.body;
   const project = { id, project_name }
   app.locals.projects.push(project);
   response.status(201).json(project)
+})
+
+app.post('/api/v1/palettes', (request, response) => {
+  app.locals.palettes.push(request.body);
+  response.status(201).json(request.body);
 })
 
 app.listen(app.get('port'), () => {

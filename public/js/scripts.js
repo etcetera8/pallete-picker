@@ -30,7 +30,19 @@ $(document).on('click', '.lock-btn', (event) => {
 })
 
 $(document).on('click', '.delete-palette', (event) => {
-  console.log(event.target);
+  const paletteId = event.target.closest("div").id;
+  const projectId = event.target.id;
+  
+  fetch(`/api/v1/palettes/${projectId}`, {
+    method: 'DELETE',
+    body: {"palette_id": paletteId},
+    headers: {
+      "palette_id": paletteId
+    }
+  })
+  .then(response => response.json())
+  
+  $(`#${paletteId}`).remove();
 })
 
 const addNewProject = (e) => {
@@ -67,6 +79,29 @@ const addNewPalette = (e) => {
   })
   const newPalette = { name: paletteName, hex_codes: [...hexCodes] }
   console.log(project, newPalette);
+
+  fetch('/api/v1/palettes', {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json, text/plain',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      "id": Date.now(),
+      "project_key": project,
+      "hex_codes": [...hexCodes],
+      "palette_name": paletteName
+    })
+  })
+    .then( response => {
+      return response.json();
+    })
+    .then( results => {
+      console.log("these are the results", results);
+    })
+    .catch( error => {
+      console.log('request failed', error);
+    })
 
   $('#palette-name').val('');
 }
@@ -115,17 +150,20 @@ const createProjectThumbnail = async (projectData) => {
 
 const createPaletteThumbnails = async (palettes) => {
   palettes.forEach(project => {
-    project.forEach(palette => {      
+    project.forEach(palette => { 
+          
       const { palette_name } = palette;
       const template = 
-        `<span>${palette_name}</span>
-        <div id="thumbnails">
-          <div class="thumbnail-color" style="background-color:${palette.hex_codes[0]};"></div>
-          <div class="thumbnail-color" style="background-color:${palette.hex_codes[1]};"></div>
-          <div class="thumbnail-color" style="background-color:${palette.hex_codes[2]};"></div>
-          <div class="thumbnail-color" style="background-color:${palette.hex_codes[3]};"></div>
-          <div class="thumbnail-color" style="background-color:${palette.hex_codes[4]};"></div>
-          <button class="delete-palette"></button>
+        `<div id=${palette.id}>
+          <span>${palette_name}</span>
+          <div id="thumbnails">
+            <div class="thumbnail-color" style="background-color:${palette.hex_codes[0]};"></div>
+            <div class="thumbnail-color" style="background-color:${palette.hex_codes[1]};"></div>
+            <div class="thumbnail-color" style="background-color:${palette.hex_codes[2]};"></div>
+            <div class="thumbnail-color" style="background-color:${palette.hex_codes[3]};"></div>
+            <div class="thumbnail-color" style="background-color:${palette.hex_codes[4]};"></div>
+            </div>'
+          <button id=${palette.project_key} class="delete-palette"></button>
         </div>`
       $(`#${palette.project_key}`).append(template)
     })
