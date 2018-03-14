@@ -9,7 +9,7 @@ exports.seed = function (knex, Promise) {
     .then(() => {
       return Promise.all([
 
-        // Insert a single project, return the project ID, insert 2 palettes
+        // Insert a single project, return the project ID, insert 1 palette
         knex('projects').insert({ project_name: 'Project 1' }, 'id')
           .then(project => {
             return knex('palettes').insert([
