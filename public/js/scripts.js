@@ -48,51 +48,59 @@ $(document).on('click', '.delete-palette', (event) => {
 const addNewProject = (e) => {
   e.preventDefault();
   const projectName = $('#project-name').val();
-  
-  fetch('/api/v1/projects', {
-    method: 'POST',
-    headers: {
-      'Accept': 'application/json, text/plain',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({"project_name": projectName})
-  })
-  .then( (response) => {
-    return response.json()
-  })
-  .then(results => {
-    console.log(results);
-  })
-  .catch( error => {
-    console.log('request failed', error);
-  })
-
-  $('#project-name').val('');
+  if (projectName.length < 1 ) {
+    console.log('do nothing');
+  } else {
+    fetch('/api/v1/projects', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json, text/plain',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({"project_name": projectName})
+    })
+    .then( (response) => {
+      return response.json()
+    })
+    .then(results => {
+      console.log(results);
+    })
+    .catch( error => {
+      console.log('request failed', error);
+    })
+    
+    $('#project-name').val('');
+  }
 }
 
 const addNewPalette = (e) => {
   e.preventDefault();
   const project = $('select').val();
-  const paletteName = $('#palette-name').val();
-  const hexCodes = Array.from(document.querySelectorAll('.hex-code')).map(code => {
-    return code.innerHTML
-  })
-  const newPalette = { name: paletteName, hex_codes: [...hexCodes] }
-  console.log(project, newPalette);
-
-  fetch('/api/v1/palettes', {
-    method: 'POST',
-    headers: {
-      'Accept': 'application/json, text/plain',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      "id": Date.now(),
-      "project_key": project,
-      "hex_codes": [...hexCodes],
-      "palette_name": paletteName
+  const input = $('#palette-name').val();
+  
+  if ( input.length < 1 ) {
+    console.log('do nothing');
+  } else {
+    const paletteName = $('#palette-name').val();
+    const hexCodes = Array.from(document.querySelectorAll('.hex-code')).map(code => {
+      return code.innerHTML
     })
-  })
+    const newPalette = { name: paletteName, hex_codes: [...hexCodes] }
+    console.log(project, newPalette);
+    
+    fetch('/api/v1/palettes', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json, text/plain',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        "id": Date.now(),
+        "project_key": project,
+        "hex_codes": [...hexCodes],
+        "palette_name": paletteName
+      })
+    })
     .then( response => {
       return response.json();
     })
@@ -102,8 +110,9 @@ const addNewPalette = (e) => {
     .catch( error => {
       console.log('request failed', error);
     })
-
-  $('#palette-name').val('');
+    
+    $('#palette-name').val('');
+  }
 }
 
 const generatePalette = () => {
