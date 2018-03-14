@@ -82,6 +82,28 @@ app.post('/api/v1/projects', (request, response) => {
     })
 })
 
+app.post('/api/v1/palettes/', (request, response) => {
+  const palette = request.body;
+
+  for (let requiredParameter of ['palette_name']) {
+    if (!palette[requiredParameter]) {
+      return response.status(422).send({
+        error: `Expected format: {palette_name: <String>}. You're missing a "${requiredParameter}" property.`
+      });
+    }
+  }
+
+  database('palettes').insert(palette, 'id')
+    .then(palette => {
+      response.status(201).json({ id: palette[0] })
+    })
+    .catch(error => {
+      response.status(500).json({ error })
+    })
+
+  
+})
+
 app.get('/api/v1/palettes/', (request, response) => {
   database('palettes').select()
   .then( palettes => {
@@ -91,6 +113,7 @@ app.get('/api/v1/palettes/', (request, response) => {
     response.status(500).json({ error });
   })
 })
+
 
 app.get('/api/v1/projects/:id/palettes', (request, response) => {
   database('palettes').where('project_id', request.params.id).select()
