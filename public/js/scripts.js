@@ -30,7 +30,6 @@ $(document).on('click', '.lock-btn', (event) => {
 })
 
 $(document).on('click', '.delete-palette', (event) => {
-  
   const paletteId = event.target.closest("div").id;
   const projectId = event.target.id;
   
@@ -42,6 +41,8 @@ $(document).on('click', '.delete-palette', (event) => {
     }
   })
   .then(response => response.json())
+  
+  $(`#${paletteId}`).remove();
 })
 
 const addNewProject = (e) => {
