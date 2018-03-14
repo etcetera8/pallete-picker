@@ -13,10 +13,11 @@ generate.click(() => generatePalette());
 newPalette.click((e) => addNewPalette(e))
 newProject.click((e)=> addNewProject(e))
 
-$('select').focus( async () => {
+$('select').ready( async () => {
   const projectNames = await fetch('/api/v1/projects')
   const data = await projectNames.json();
-  data.projects.forEach(project => {
+  
+  data.forEach(project => {
     dropDown.append($(`<option>${project.project_name}</option>`).val(`${project.id}`))
   })
 })
@@ -60,11 +61,13 @@ const addNewProject = async (e) => {
     })
     .then(results => {
       console.log(results);
+      $('#saved-projects').fadeOut(800, () => {
+        $('#saved-projects').fadeIn().delay(1000)
+      })
     })
     .catch( error => {
       console.log('request failed', error);
     })
-    
     $('#project-name').val('');
   }
   createProjectThumbnail();
@@ -146,7 +149,6 @@ const getPalettes = async (projects) => {
     return await palette;
   })
   const palettes = await Promise.all(ids);
-  console.log(palettes);
   
   return palettes;
 }
@@ -174,7 +176,6 @@ const createPaletteThumbnails = async (palettes) => {
   $('#thumbnails').empty();
   palettes.forEach(project => {
     project.forEach(palette => {
-      console.log(palette);
       const { palette_name } = palette;
       const template = 
         `<div id=${palette.id}>
