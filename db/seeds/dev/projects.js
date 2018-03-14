@@ -23,6 +23,16 @@ exports.seed = function (knex, Promise) {
                 color4: "#00b",
                 color5: "#00c",
               },
+              {
+                palette_name: 'the worlds greatest palette',
+                project_id: project[0],
+                colors: ["#000", "#fff", "#00a", "#00b", "#00c"],
+                color1: "#000",
+                color2: "#fff",
+                color3: "#00a",
+                color4: "#00b",
+                color5: "#00c",
+              }
             ])
           })
           .then(() => console.log('Seeding complete!'))
