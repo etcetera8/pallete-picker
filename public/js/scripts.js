@@ -139,11 +139,15 @@ const generateHex = () => {
 
 const getPalettes = async (projects) => {
   const ids = await projects.map(async (project) => {
-    const response = await fetch(`api/v1/palettes/${project.id}`)
+    
+    const response = await fetch(`/api/v1/projects/${project.id}/palettes`)
     const palette = await response.json();
+    
     return await palette;
   })
   const palettes = await Promise.all(ids);
+  console.log(palettes);
+  
   return palettes;
 }
 
@@ -152,9 +156,9 @@ const createProjectThumbnail = async () => {
   $('#saved-projects').empty();
 
   const response = await fetch('/api/v1/projects')
-  const projects = await response.json(); 
+  const projects = await response.json();  
   
-  projects.projects.forEach(project => {
+  projects.forEach(project => {
     const template = 
       `<article id=${project.id} class="saved-project thumbnails">
           <h3>${project.project_name}</h3>
@@ -162,15 +166,15 @@ const createProjectThumbnail = async () => {
       $('#saved-projects').append(template)
   })
 
-  const palettes = await getPalettes(projects.projects);
+  const palettes = await getPalettes(projects);
   createPaletteThumbnails(palettes);
 }
 
 const createPaletteThumbnails = async (palettes) => {
   $('#thumbnails').empty();
   palettes.forEach(project => {
-    project.forEach(palette => { 
-          
+    project.forEach(palette => {
+      console.log(palette);
       const { palette_name } = palette;
       const template = 
         `<div id=${palette.id}>
@@ -179,18 +183,17 @@ const createPaletteThumbnails = async (palettes) => {
             </section>
             <button id=${palette.project_key} class="delete-palette"></button>
           <div id="thumbnails">
-            <div class="thumbnail-color" style="background-color:${palette.hex_codes[0]};"></div>
-            <div class="thumbnail-color" style="background-color:${palette.hex_codes[1]};"></div>
-            <div class="thumbnail-color" style="background-color:${palette.hex_codes[2]};"></div>
-            <div class="thumbnail-color" style="background-color:${palette.hex_codes[3]};"></div>
-            <div class="thumbnail-color" style="background-color:${palette.hex_codes[4]};"></div>
+            <div class="thumbnail-color" style="background-color:${palette.colors[0]};"></div>
+            <div class="thumbnail-color" style="background-color:${palette.colors[1]};"></div>
+            <div class="thumbnail-color" style="background-color:${palette.colors[2]};"></div>
+            <div class="thumbnail-color" style="background-color:${palette.colors[3]};"></div>
+            <div class="thumbnail-color" style="background-color:${palette.colors[4]};"></div>
           </div>
         </div>`
-      $(`#${palette.project_key}`).append(template)
+      $(`#${palette.project_id}`).append(template)
     })
     })
 
-    
 }
 
 
