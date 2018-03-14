@@ -11,14 +11,22 @@ exports.up = function(knex, Promise) {
     knex.schema.createTable('palettes', function(table) {
       table.increments('id').primary();
       table.string('palette_name');
-      table.integer('paper_id').unsigned()
+      table.integer('project_id').unsigned()
       table.foreign('project_id')
-        .references('projects.id')
-        
+        .references('projects.id');
+      table.specificType('colors', 'text[]');
+      table.string('color1');
+      table.string('color2');
+      table.string('color3');
+      table.string('color4');
+      table.string('color5');
     })
   ])
 };
 
 exports.down = function(knex, Promise) {
-  
+  return Promise.all([
+    knex.schema.dropTable('projects'),
+    knex.schema.dropTable('palettes')
+  ])
 };
