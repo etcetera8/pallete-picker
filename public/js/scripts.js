@@ -41,7 +41,7 @@ $(document).on('click', '.delete-palette', (event) => {
   $(`#${paletteId}`).remove();
 })
 
-const addNewProject = (e) => {
+const addNewProject = async (e) => {
   e.preventDefault();
   const projectName = $('#project-name').val();
   if (projectName.length < 1 ) {
@@ -67,9 +67,11 @@ const addNewProject = (e) => {
     
     $('#project-name').val('');
   }
+  createProjectThumbnail();
 }
 
 const addNewPalette = (e) => {
+
   e.preventDefault();
   const project = $('select').val();
   const input = $('#palette-name').val();
@@ -108,6 +110,8 @@ const addNewPalette = (e) => {
     })
     
     $('#palette-name').val('');
+
+    createProjectThumbnail();
   }
 }
 
@@ -144,6 +148,9 @@ const getPalettes = async (projects) => {
 }
 
 const createProjectThumbnail = async () => {
+
+  $('#saved-projects').empty();
+
   const response = await fetch('/api/v1/projects')
   const projects = await response.json(); 
   
@@ -157,12 +164,10 @@ const createProjectThumbnail = async () => {
 
   const palettes = await getPalettes(projects.projects);
   createPaletteThumbnails(palettes);
-
-  
 }
 
 const createPaletteThumbnails = async (palettes) => {
-  
+  $('#thumbnails').empty();
   palettes.forEach(project => {
     project.forEach(palette => { 
           
@@ -179,7 +184,7 @@ const createPaletteThumbnails = async (palettes) => {
             <div class="thumbnail-color" style="background-color:${palette.hex_codes[2]};"></div>
             <div class="thumbnail-color" style="background-color:${palette.hex_codes[3]};"></div>
             <div class="thumbnail-color" style="background-color:${palette.hex_codes[4]};"></div>
-            </div>
+          </div>
         </div>`
       $(`#${palette.project_key}`).append(template)
     })
