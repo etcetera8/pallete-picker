@@ -42,7 +42,7 @@ $(document).on('click', '.delete-palette', (event) => {
   })
   .then(response => response.json())
   
-  $(`#${paletteId}`).remove();
+  //$(`#${paletteId}`).remove();
 })
 
 const addNewProject = (e) => {
@@ -153,7 +153,7 @@ const createProjectThumbnail = async (projectData) => {
       `<article id=${project.id} class="saved-project thumbnails">
           <h3>${project.project_name}</h3>
         </article>`
-      $('#projects').append(template)
+      $('#saved-projects').append(template)
   })
 }
 
@@ -164,15 +164,17 @@ const createPaletteThumbnails = async (palettes) => {
       const { palette_name } = palette;
       const template = 
         `<div id=${palette.id}>
-          <span>${palette_name}</span>
+          <div class='title-align'>
+            <span class="palette-title">${palette_name}</span>
+            <button id=${palette.project_key} class="delete-palette"></button>
+          </div>
           <div id="thumbnails">
             <div class="thumbnail-color" style="background-color:${palette.hex_codes[0]};"></div>
             <div class="thumbnail-color" style="background-color:${palette.hex_codes[1]};"></div>
             <div class="thumbnail-color" style="background-color:${palette.hex_codes[2]};"></div>
             <div class="thumbnail-color" style="background-color:${palette.hex_codes[3]};"></div>
             <div class="thumbnail-color" style="background-color:${palette.hex_codes[4]};"></div>
-            </div>'
-          <button id=${palette.project_key} class="delete-palette"></button>
+            </div>
         </div>`
       $(`#${palette.project_key}`).append(template)
     })
