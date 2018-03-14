@@ -78,13 +78,19 @@ let globalId = 4;
 
 app.post('/api/v1/projects', (request, response) => {
   const id = globalId;
-  globalId+=1;
-  console.log(globalId);
+  globalId += 1;
   
   const { project_name } = request.body;
   const project = { id, project_name }
   app.locals.projects.push(project);
   response.status(201).json(project)
+})
+
+app.post('/api/v1/palettes', (request, response) => {
+  console.log(request.body);
+  app.locals.palettes.push(request.body);
+  response.status(201).json(request.body)
+  
 })
 
 app.listen(app.get('port'), () => {

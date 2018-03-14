@@ -68,6 +68,29 @@ const addNewPalette = (e) => {
   const newPalette = { name: paletteName, hex_codes: [...hexCodes] }
   console.log(project, newPalette);
 
+  fetch('/api/v1/palettes', {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json, text/plain',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      "id": Date.now(),
+      "project_key": project,
+      "hex_codes": [...hexCodes],
+      "palette_name": paletteName
+    })
+  })
+    .then( response => {
+      return response.json();
+    })
+    .then( results => {
+      console.log("these are the results", results);
+    })
+    .catch( error => {
+      console.log('request failed', error);
+    })
+
   $('#palette-name').val('');
 }
 
