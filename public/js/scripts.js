@@ -26,20 +26,18 @@ $(document).on('click', '.lock-btn', (event) => {
   $(event.target).toggleClass('lock unlock')
 })
 
-$(document).on('click', '.delete-palette', (event) => {
-  const paletteId = event.target.closest("div").id;
-  const projectId = event.target.id;
+$(document).on('click', '.delete-palette', async (event) => {
+  const paletteId = event.target.value
   
-  fetch(`/api/v1/palettes/${projectId}`, {
-    method: 'DELETE',
-    body: {"palette_id": paletteId},
-    headers: {
-      "palette_id": paletteId
-    }
+  await fetch(`/api/v1/palettes/${paletteId}`, {
+    method: 'DELETE'
   })
   .then(response => response.json())
+  .then(json => {
+    return json;
+   });
   
-  $(`#${paletteId}`).remove();
+  $(`.${paletteId}`).remove();
 })
 
 const addNewProject = async (e) => {
@@ -174,13 +172,15 @@ const createPaletteThumbnails = async (palettes) => {
   $('#thumbnails').empty();
   palettes.forEach( project => {
     project.forEach( palette => {
-      const { palette_name } = palette;
+      const { palette_name, id } = palette;
+      console.log(palette);
+      
       const template = 
-        `<div>
+        `<div class=${palette.id}>
           <section class='title-align'>
             <span class="palette-title">${palette_name}</span>
             </section>
-            <button id=${palette.project_key} class="delete-palette"></button>
+            <button value=${palette.id} class="delete-palette"></button>
           <div id="thumbnails">
             <div class="thumbnail-color" style="background-color:${palette.colors[0]};"></div>
             <div class="thumbnail-color" style="background-color:${palette.colors[1]};"></div>
@@ -191,8 +191,7 @@ const createPaletteThumbnails = async (palettes) => {
         </div>`
       $(`#${palette.project_id}`).append(template)
     })
-    })
-
+  })
 }
 
 

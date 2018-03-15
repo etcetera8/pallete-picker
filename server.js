@@ -100,8 +100,19 @@ app.post('/api/v1/palettes/', (request, response) => {
     .catch(error => {
       response.status(500).json({ error })
     })
+})
 
+app.delete('/api/v1/palettes/:id', (request, response) => {
+  console.log(request.params.id);
   
+  database('palettes').where('id', request.params.id).del()
+  .then(palette => {    
+    response.status(202).json(palette);
+  })
+  .catch(error => {
+    response.status(500).json({ error })
+  })
+
 })
 
 app.get('/api/v1/palettes/', (request, response) => {
