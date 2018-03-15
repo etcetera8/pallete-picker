@@ -74,20 +74,19 @@ const addNewProject = async (e) => {
 }
 
 const addNewPalette = (e) => {
-
   e.preventDefault();
-  const project = $('select').val();
   const input = $('#palette-name').val();
   
   if ( input.length < 1 ) {
     console.log('do nothing');
   } else {
     const paletteName = $('#palette-name').val();
+    const projectId = $('select').val();
+    console.log(projectId);
+    
     const hexCodes = Array.from(document.querySelectorAll('.hex-code')).map(code => {
       return code.innerHTML
     })
-    const newPalette = { name: paletteName, hex_codes: [...hexCodes] }
-    console.log(project, newPalette);
     
     fetch('/api/v1/palettes', {
       method: 'POST',
@@ -96,9 +95,8 @@ const addNewPalette = (e) => {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        "id": Date.now(),
-        "project_key": project,
-        "hex_codes": [...hexCodes],
+        "project_id": projectId,
+        "colors": [...hexCodes],
         "palette_name": paletteName
       })
     })
@@ -160,7 +158,7 @@ const createProjectThumbnail = async () => {
   const response = await fetch('/api/v1/projects')
   const projects = await response.json();  
   
-  projects.forEach(project => {
+  projects.forEach( project => {
     const template = 
       `<article id=${project.id} class="saved-project thumbnails">
           <h3>${project.project_name}</h3>
@@ -174,11 +172,11 @@ const createProjectThumbnail = async () => {
 
 const createPaletteThumbnails = async (palettes) => {
   $('#thumbnails').empty();
-  palettes.forEach(project => {
-    project.forEach(palette => {
+  palettes.forEach( project => {
+    project.forEach( palette => {
       const { palette_name } = palette;
       const template = 
-        `<div id=${palette.id}>
+        `<div>
           <section class='title-align'>
             <span class="palette-title">${palette_name}</span>
             </section>
