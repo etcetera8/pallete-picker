@@ -5,7 +5,6 @@ const dropDown = $('select');
 
 window.onload = async () => {
   generatePalette();
-  
   await createProjectThumbnail();
 }
 
@@ -20,6 +19,16 @@ $('select').ready( async () => {
   data.forEach(project => {
     dropDown.append($(`<option>${project.project_name}</option>`).val(`${project.id}`))
   })
+})
+
+$('#saved-projects').on('click', '.palette-title', (event) => {
+  const thumbnails = Array.from($(event.target).closest('div').children('#thumbnails').children());
+  const hexCodes = thumbnails.map(thumb => thumb.title )  
+  $('.color').toArray().forEach((el, index) => {
+    $(el).css('background-color', hexCodes[index]);
+    $(el).children('.hex-code').text(hexCodes[index]);
+  })
+  
 })
 
 $(document).on('click', '.lock-btn', (event) => {
@@ -150,7 +159,6 @@ const getPalettes = async (projects) => {
 }
 
 const createProjectThumbnail = async () => {
-
   $('#saved-projects').empty();
 
   const response = await fetch('/api/v1/projects')
@@ -181,14 +189,14 @@ const createPaletteThumbnails = async (palettes) => {
             </section>
             <button value=${palette.id} class="delete-palette"></button>
           <div id="thumbnails">
-            <div class="thumbnail-color" style="background-color:${palette.colors[0]};"></div>
-            <div class="thumbnail-color" style="background-color:${palette.colors[1]};"></div>
-            <div class="thumbnail-color" style="background-color:${palette.colors[2]};"></div>
-            <div class="thumbnail-color" style="background-color:${palette.colors[3]};"></div>
-            <div class="thumbnail-color" style="background-color:${palette.colors[4]};"></div>
+            <div class="thumbnail-color" title=${palette.colors[0]} style="background-color:${palette.colors[0]};"></div>
+            <div class="thumbnail-color" title=${palette.colors[1]} style="background-color:${palette.colors[1]};"></div>
+            <div class="thumbnail-color" title=${palette.colors[2]} style="background-color:${palette.colors[2]};"></div>
+            <div class="thumbnail-color" title=${palette.colors[3]} style="background-color:${palette.colors[3]};"></div>
+            <div class="thumbnail-color" title=${palette.colors[4]} style="background-color:${palette.colors[4]};"></div>
           </div>
         </div>`
-      $(`#${palette.project_id}`).append(template)
+      $(`#${palette.project_id}`).append(template);
     })
   })
 }
