@@ -52,6 +52,16 @@ main {
   margin: 0;
 }
 
+.palette-title {
+  font-size: 1.5em;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.palette-title:hover {
+  color: lightgreen;
+}
+
 .hex-code {
   padding: 2px;
   text-align: center;
@@ -120,6 +130,14 @@ input {
   text-align: center;
 }
 
+h3 {
+  margin: 0 0 10px 0;
+  color: rgb(255, 219, 126);
+  font-size: 1.5em;
+  border-bottom: 1px solid rgb(255, 219, 126);
+  width: 40%;
+}
+
 #saved-projects {
   display: flex;
   flex-direction: row;
@@ -131,7 +149,6 @@ input {
 .title-align {
   display: flex;
   justify-content: space-between;
-
 }
 
 label {
@@ -145,6 +162,7 @@ label {
   width: 300px;
   padding: 10px;
   margin-top: 25px;
+  background: rgba(255,255,255, 0.2)
 }
 
 #thumbnails {
@@ -161,14 +179,22 @@ label {
 }
 
 .delete-palette {
+  float: right;
+  margin-left: 5px;
   background: none;
   border: none;
   height: 35px;
   width: 35px;
+  border-radius: 50%;
   background-image: url('../assets/trash.png');
   background-size: 60%;
   background-repeat: no-repeat;
-  background-position: center;
+  background-position: top;
+  transition: background-image 0.2s;
+}
+
+.delete-palette:hover {
+  background-image: url('../assets/trashHover.png');
 }
 
 

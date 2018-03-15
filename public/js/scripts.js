@@ -5,7 +5,6 @@ const dropDown = $('select');
 
 window.onload = async () => {
   generatePalette();
-  
   await createProjectThumbnail();
 }
 
@@ -21,6 +20,16 @@ $('select').ready( async () => {
     dropDown.append($(`<option>${project.project_name}</option>`).val(`${project.id}`))
   })
 })
+
+$('#saved-projects').on('click', '.palette-title', (event) => {
+  const thumbnails = Array.from($(event.target).closest('div').children('#thumbnails').children());
+  thumbnails.forEach(thumb => {
+    console.log(thumb.css);
+    
+  })  
+  
+})
+
 
 $(document).on('click', '.lock-btn', (event) => {
   $(event.target).toggleClass('lock unlock')
@@ -150,7 +159,6 @@ const getPalettes = async (projects) => {
 }
 
 const createProjectThumbnail = async () => {
-
   $('#saved-projects').empty();
 
   const response = await fetch('/api/v1/projects')
