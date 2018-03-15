@@ -52,7 +52,10 @@ $(document).on('click', '.delete-palette', async (event) => {
 const addNewProject = async (e) => {
   e.preventDefault();
   const projectName = $('#project-name').val();
-  if (projectName.length < 1 ) {
+  const projectNames = document.querySelectorAll('.project-title');
+  const duplicateName = Array.from(projectNames).find(title => title.innerText === projectName)
+  
+  if (projectName.length < 1 || duplicateName ) {
     console.log('do nothing');
   } else {
     fetch('/api/v1/projects', {
@@ -76,8 +79,8 @@ const addNewProject = async (e) => {
       console.log('request failed', error);
     })
     $('#project-name').val('');
+    createProjectThumbnail();
   }
-  createProjectThumbnail();
 }
 
 const addNewPalette = (e) => {
@@ -167,7 +170,7 @@ const createProjectThumbnail = async () => {
   projects.forEach( project => {
     const template = 
       `<article id=${project.id} class="saved-project thumbnails">
-          <h3>${project.project_name}</h3>
+          <h3 class="project-title">${project.project_name}</h3>
         </article>`
       $('#saved-projects').append(template)
   })
