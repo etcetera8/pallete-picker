@@ -173,7 +173,6 @@ const createPaletteThumbnails = async (palettes) => {
   palettes.forEach( project => {
     project.forEach( palette => {
       const { palette_name, id } = palette;
-      console.log(palette);
       
       const template = 
         `<div class=${palette.id}>
