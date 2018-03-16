@@ -11,43 +11,56 @@ window.onload = async () => {
 generate.click(() => generatePalette());
 newPalette.click((e) => addNewPalette(e))
 newProject.click((e)=> addNewProject(e))
+$(document).on('click', '.lock-btn', (event) => lockToggle(event))
+$('select').ready( () => loadOptions())
+$('#saved-projects').on('click', '.palette-title', (event) => displayProjectThumbnails(event));
+$(document).on('click', '.delete-palette', (event) => deletePalette(event))
+window.onkeydown = function (e) {
+  if (e.keyCode === 32 && ) {
+    e.preventDefault();
+    generatePalette();
+  }
+};
 
-$('select').ready( async () => {
+const generateHex = () => {
+  return '#' + Math.random().toString(16).slice(-6).toUpperCase();
+}
+
+const lockToggle = (event) => {
+  $(event.target).toggleClass('lock unlock')
+}
+
+const loadOptions = async () => {
+  $('select').empty();
   const projectNames = await fetch('/api/v1/projects')
   const data = await projectNames.json();
-  
+
   data.forEach(project => {
     dropDown.append($(`<option>${project.project_name}</option>`).val(`${project.id}`))
   })
-})
+}
 
-$('#saved-projects').on('click', '.palette-title', (event) => {
+const displayProjectThumbnails = (event) => {
   const thumbnails = Array.from($(event.target).closest('div').children('#thumbnails').children());
-  const hexCodes = thumbnails.map(thumb => thumb.title )  
+  const hexCodes = thumbnails.map(thumb => thumb.title)
   $('.color').toArray().forEach((el, index) => {
     $(el).css('background-color', hexCodes[index]);
     $(el).children('.hex-code').text(hexCodes[index]);
   })
-  
-})
+}
 
-$(document).on('click', '.lock-btn', (event) => {
-  $(event.target).toggleClass('lock unlock')
-})
-
-$(document).on('click', '.delete-palette', async (event) => {
+const deletePalette = async (event) => {
   const paletteId = event.target.value
-  
+
   await fetch(`/api/v1/palettes/${paletteId}`, {
     method: 'DELETE'
   })
-  .then(response => response.json())
-  .then(json => {
-    return json;
-   });
-  
+    .then(response => response.json())
+    .then(json => {
+      return json;
+    });
   $(`.${paletteId}`).remove();
-})
+}
 
 const addNewProject = async (e) => {
   e.preventDefault();
@@ -56,7 +69,6 @@ const addNewProject = async (e) => {
   const duplicateName = Array.from(projectNames).find(title => title.innerText.toUpperCase() === projectName.toUpperCase())
   
   if (projectName.length < 1 || duplicateName ) {
-    console.log('do nothing');
     $('.error').toggle();
   } else {
     $('.error').hide();
@@ -68,7 +80,7 @@ const addNewProject = async (e) => {
       },
       body: JSON.stringify({"project_name": projectName})
     })
-    .then( (response) => {
+    .then( response => {
       return response.json()
     })
     .then(results => {
@@ -82,6 +94,7 @@ const addNewProject = async (e) => {
     })
     $('#project-name').val('');
     createProjectThumbnail();
+    loadOptions();
   }
 }
 
@@ -90,12 +103,10 @@ const addNewPalette = (e) => {
   const input = $('#palette-name').val();
   
   if ( input.length < 1 ) {
-    console.log('do nothing');
+    //do nothing
   } else {
     const paletteName = $('#palette-name').val();
-    const projectId = $('select').val();
-    console.log(projectId);
-    
+    const projectId = $('select').val();    
     const hexCodes = Array.from(document.querySelectorAll('.hex-code')).map(code => {
       return code.innerHTML
     })
@@ -121,9 +132,7 @@ const addNewPalette = (e) => {
     .catch( error => {
       console.log('request failed', error);
     })
-    
     $('#palette-name').val('');
-
     createProjectThumbnail();
   }
 }
@@ -139,21 +148,9 @@ const generatePalette = () => {
   });
 }
 
-window.onkeydown = function (e) {
-  if (e.keyCode == 32 && e.target == document.body) {
-    e.preventDefault();
-    generatePalette();
-  }
-};  
-
-const generateHex = () => {
-  return '#' + (Math.random() * 0xFFFFFF << 0).toString(16).toUpperCase();
-}
-
 const getPalettes = async (projects) => {
   const ids = await projects.map(async (project) => {
-    
-    const response = await fetch(`/api/v1/projects/${project.id}/palettes`)
+    const response = await fetch(`/api/v1/projects/${project.id}/palettes`);
     const palette = await response.json();
     
     return await palette;
