@@ -193,6 +193,11 @@ label {
   transition: background-image 0.2s;
 }
 
+.error {
+  color: rgb(255,0,0);
+  display: none;
+}
+
 .delete-palette:hover {
   background-image: url('../assets/trashHover.png');
 }

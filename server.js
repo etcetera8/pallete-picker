@@ -36,7 +36,7 @@ app.post('/api/v1/projects', (request, response) => {
     .then(project => {
       response.status(201).json({ id: project[0] })
     })
-    .catch(error => {
+    .catch( error => {
       response.status(500).json({ error })
     })
 })
@@ -62,11 +62,14 @@ app.post('/api/v1/palettes/', (request, response) => {
 })
 
 app.delete('/api/v1/palettes/:id', (request, response) => {
-  console.log(request.params.id);
-  
+
   database('palettes').where('id', request.params.id).del()
-  .then(palette => {    
-    response.status(202).json(palette);
+  .then(palette => {   
+    if ( palette ) {
+      response.status(202).json(palette);
+    } else {
+      response.status(404).json({ error: "No record to delete"})
+    }
   })
   .catch(error => {
     response.status(500).json({ error })
@@ -103,3 +106,5 @@ app.get('/api/v1/projects/:id/palettes', (request, response) => {
 app.listen(app.get('port'), () => {
   console.log(`${app.locals.title} server running on port 3000`); 
 })
+
+module.exports = app;

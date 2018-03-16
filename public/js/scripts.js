@@ -53,11 +53,13 @@ const addNewProject = async (e) => {
   e.preventDefault();
   const projectName = $('#project-name').val();
   const projectNames = document.querySelectorAll('.project-title');
-  const duplicateName = Array.from(projectNames).find(title => title.innerText === projectName)
+  const duplicateName = Array.from(projectNames).find(title => title.innerText.toUpperCase() === projectName.toUpperCase())
   
   if (projectName.length < 1 || duplicateName ) {
     console.log('do nothing');
+    $('.error').toggle();
   } else {
+    $('.error').hide();
     fetch('/api/v1/projects', {
       method: 'POST',
       headers: {
