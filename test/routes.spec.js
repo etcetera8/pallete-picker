@@ -132,4 +132,55 @@ describe('API Routes', () => {
         })
       })
     })
+
+    describe('POST /api/v1/palettes', () => {
+      it('should post a new palette to the palettes', () => {
+
+        return chai.request(server)
+        .post('/api/v1/palettes')
+        .send({
+          palette_name: "the nicest palette",
+          colors: ["#aaa", "#bbb", "#ccc", "#ddd", "#00b"]
+        })
+        .then(response => {
+          response.should.have.status(201);
+          response.body.should.be.a('object'); 
+          response.body.should.have.property('id');
+          response.body.id.should.equal(3);
+        })
+      })
+
+      it('should return an error if a name is not given', () => {
+        return chai.request(server)
+        .post('/api/v1/palettes')
+        .send({})
+        .then(response => {
+          response.should.have.status(422);
+          response.body.should.have.property('error');
+          response.body.error.should.equal('Expected format: {palette_name: <String>}. You\'re missing a "palette_name" property.')
+        })
+      })
+    })
+
+    describe('DELETE /api/v1/palettes/:id', () => {
+      
+      it('should delete a specific palette', () => {
+        return chai.request(server)
+        .delete('/api/v1/palettes/2')
+        .then(response => {
+          response.should.have.status(202);
+        })
+      })
+
+      it('should return a 404 error if no palette exists', () => {
+        return chai.request(server)
+        .delete('/api/v1/palettes/4')
+        .then(response => {
+          response.should.have.status(404);
+          response.body.should.be.a('object');
+          response.body.should.have.property('error');
+          response.body.error.should.equal('No record to delete');
+        })
+      })
+    })
 });

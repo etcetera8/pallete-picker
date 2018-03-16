@@ -35,7 +35,6 @@ exports.seed = function (knex, Promise) {
               }
             ])
           })
-          .then(() => console.log())
           .catch(error => console.log(`Error seeding data: ${error}`))
       ]) // end return Promise.all
     })

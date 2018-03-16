@@ -62,11 +62,14 @@ app.post('/api/v1/palettes/', (request, response) => {
 })
 
 app.delete('/api/v1/palettes/:id', (request, response) => {
-  console.log(request.params.id);
-  
+
   database('palettes').where('id', request.params.id).del()
-  .then(palette => {    
-    response.status(202).json(palette);
+  .then(palette => {   
+    if ( palette ) {
+      response.status(202).json(palette);
+    } else {
+      response.status(404).json({ error: "No record to delete"})
+    }
   })
   .catch(error => {
     response.status(500).json({ error })
