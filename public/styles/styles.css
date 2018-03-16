@@ -12,6 +12,15 @@ header {
   margin-bottom: 50px;
 }
 
+.wrapper {
+  display: flex;
+}
+
+.projects-wrapper {
+  text-align: center;
+  /* width:20%; */
+}
+
 button {
   cursor: pointer;
 }
@@ -33,11 +42,20 @@ main {
   align-content: center;
   align-items: center;
   border-bottom: 1px solid #fff;
+  width: 80%;
+  margin-left: 2%;
+}
+
+.form-wrapper {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
 }
 
 #palette-display-main {
   display: flex;
-  width: 95%;
+  width: 100%;
   background: rgba(255, 255, 255, 0.5)
 }
 
@@ -67,9 +85,12 @@ main {
   text-align: center;
   border-radius: 5px;
   color: #fff;
-  font-size: 2.5em;
+  font-size: 2em;
   background: rgba(0, 0, 0, 0.4);
   width: 75%;
+}
+
+#new-palette-form {
 }
 
 .lock-btn {
@@ -135,15 +156,16 @@ h3 {
   color: rgb(255, 219, 126);
   font-size: 1.5em;
   border-bottom: 1px solid rgb(255, 219, 126);
-  width: 40%;
+  width: 40%;  
 }
 
 #saved-projects {
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  flex-wrap: wrap;
+  width: 100%;
+  flex-direction: column;
+  height: 500px;
   margin: 10px;
+  overflow-y: scroll;
 }
 
 .title-align {
@@ -159,10 +181,14 @@ label {
 .saved-project {
   color: #fff;
   border: 1px solid white;
-  width: 300px;
+  min-width: 260px;
   padding: 10px;
-  margin-top: 25px;
-  background: rgba(255,255,255, 0.2)
+  
+  margin: 25px;
+  background: rgba(255,255,255, 0.2);
+  min-height: 300px;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 #thumbnails {
@@ -202,10 +228,9 @@ label {
   background-image: url('../assets/trashHover.png');
 }
 
-
 @media only screen and (max-width: 950px) { 
   .hex-code {
-    font-size: 1.5em;
+    font-size: 1em;
   }
 }
 

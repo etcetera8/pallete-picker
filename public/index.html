@@ -11,9 +11,9 @@
 </head>
 <body>
   <header>
-    <h1 id="title">palette Picker</h1>
+    <h1 id="title">Palette Picker</h1>
   </header>
-
+<div class="wrapper">
   <main>
     <section id="palette-display-main">
       <div class="color unlocked" id="c1"><span class="hex-code">#342582</span></span><button class="lock-btn unlock"></i></button></div>
@@ -22,25 +22,26 @@
       <div class="color unlocked" id="c4"><span class="hex-code">#342582</span></span><button class="lock-btn unlock"></i></button></div>
       <div class="color unlocked" id="c5"><span class="hex-code">#342582</span></span><button class="lock-btn unlock"></i></button></div>
     </section>
-    <button id="generate">New palette</button>
-    <form id="new-palette-form">
-      <select name="palette-folders"></select>
-        <input id="palette-name" type="text" placeholder="New palette name" />
-        <button class="new-btn new-palette-btn" type="submit">Save Palette</button>
-      
-    </form>
+    <div class="form-wrapper">
+      <button id="generate">New palette</button>
+      <form id="new-palette-form">
+        <select name="palette-folders"></select>
+          <input id="palette-name" type="text" placeholder="New palette name" />
+          <button class="new-btn new-palette-btn" type="submit">Save Palette</button>
+      </form>
+    </div>
   </main>
-
-  <section id="projects">
+  <section class="projects-wrapper">
     <form id="new-project-form">
       <label>Create a new project: </label>
       <input id="project-name" type="text" placeholder="New project name">
       <button class = "new-btn new-project-btn" type="submit">Save Project</button>
     </form>
     <span class="error">Enter a <strong>new</strong> project name</span>
-  </section>
     <div id="saved-projects">
     </div>
+  </section>
+</div>
 
 
   
