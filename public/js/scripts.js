@@ -16,7 +16,7 @@ $('select').ready( () => loadOptions())
 $('#saved-projects').on('click', '.palette-title', (event) => displayProjectThumbnails(event));
 $(document).on('click', '.delete-palette', (event) => deletePalette(event))
 window.onkeydown = function (e) {
-  if (e.keyCode === 32 && ) {
+  if ( e.keyCode === 32 && e.target === document.body ) {
     e.preventDefault();
     generatePalette();
   }
