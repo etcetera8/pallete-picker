@@ -60,6 +60,9 @@ describe('API Routes', () => {
         response.body[0].should.have.property('id');
         response.body[0].id.should.equal(1)
       })
+      .catch(err => {
+        throw err;
+      })
     })
   })
 
@@ -76,6 +79,9 @@ describe('API Routes', () => {
           response.body.should.have.property('id');
           response.body.id.should.equal(2);
         })
+        .catch(err => {
+          throw err;
+        })
       })
       
       it('should give an error if no project name is given', () => {
@@ -86,6 +92,9 @@ describe('API Routes', () => {
           response.should.have.status(422);
           response.body.should.have.property('error')
           response.body.error.should.equal('Expected format: {project_name: <String>}. You\'re missing a "project_name" property.')
+        })
+        .catch(err => {
+          throw err;
         })
       })
     })
@@ -105,6 +114,9 @@ describe('API Routes', () => {
           response.body[0].colors.length.should.equal(5);
           response.body[0].colors[0].should.be.a('string');
         })
+        .catch(err => {
+          throw err;
+        });
       })
     })
 
@@ -120,6 +132,9 @@ describe('API Routes', () => {
           response.body[0].should.have.property('palette_name');
           response.body[0].palette_name.should.equal('a nice palette');
         })
+        .catch(err => {
+          throw err;
+        })
       })
 
       it('should give an error if that project does not exist', () => {
@@ -129,6 +144,9 @@ describe('API Routes', () => {
           response.should.have.status(404);
           response.body.should.have.property('error');
           response.body.error.should.equal('Could not find project with id 500');
+        })
+        .catch(err => {
+          throw err;
         })
       })
     })
@@ -148,6 +166,9 @@ describe('API Routes', () => {
           response.body.should.have.property('id');
           response.body.id.should.equal(3);
         })
+        .catch(err => {
+          throw err;
+        })
       })
 
       it('should return an error if a name is not given', () => {
@@ -158,6 +179,9 @@ describe('API Routes', () => {
           response.should.have.status(422);
           response.body.should.have.property('error');
           response.body.error.should.equal('Expected format: {palette_name: <String>}. You\'re missing a "palette_name" property.')
+        })
+        .catch(err => {
+          throw err;
         })
       })
     })
@@ -170,6 +194,9 @@ describe('API Routes', () => {
         .then(response => {
           response.should.have.status(202);
         })
+        .catch(err => {
+          throw err;
+        })
       })
 
       it('should return a 404 error if no palette exists', () => {
@@ -180,6 +207,9 @@ describe('API Routes', () => {
           response.body.should.be.a('object');
           response.body.should.have.property('error');
           response.body.error.should.equal('No record to delete');
+        })
+        .catch(err => {
+          throw err;
         })
       })
     })
