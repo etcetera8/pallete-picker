@@ -6,6 +6,7 @@ body, html {
   background: rgba(73, 73, 191, 0.3);
   font-family: 'Cuprum', sans-serif;
   font-size: 18px;
+  height: 100%;
 }
 
 header {
@@ -50,7 +51,16 @@ main {
   display: flex;
   justify-content: space-around;
   align-items: center;
+  box-sizing: border-box;
   width: 100%;
+  border-bottom: 1px solid #fff;
+  border-left: 1px solid #fff;
+  border-right: 1px solid #fff;
+  background: rgba(255,255,255, 0.2)
+}
+
+#palette-name {
+ margin: 0 10px;
 }
 
 #palette-display-main {
@@ -91,6 +101,10 @@ main {
 }
 
 #new-palette-form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
 }
 
 .lock-btn {
@@ -122,7 +136,7 @@ main {
 #generate {
   width: 125px;
   height: 65px;
-  margin: 25px 0 50px 0;
+  margin: 20px 0;
   background: none;
   border: 2px solid #fff;
   font-size: 1em;
@@ -151,6 +165,10 @@ input {
   text-align: center;
 }
 
+#project-name {
+  margin: 2px;
+}
+
 h3 {
   margin: 0 0 10px 0;
   color: rgb(255, 219, 126);
@@ -164,7 +182,6 @@ h3 {
   width: 100%;
   flex-direction: column;
   height: 500px;
-  margin: 10px;
   overflow-y: scroll;
 }
 
