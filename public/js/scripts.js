@@ -27,7 +27,7 @@ const generateHex = () => {
 }
 
 const lockToggle = (event) => {
-  $(event.target).toggleClass('lock unlock')
+  $(event.target).toggleClass('lock unlock');
 }
 
 const loadOptions = async () => {
@@ -84,17 +84,14 @@ const addNewProject = async (e) => {
       return response.json()
     })
     .then(results => {
-      console.log(results);
-      $('#saved-projects').fadeOut(800, () => {
-        $('#saved-projects').fadeIn().delay(1000)
-      })
+      console.log("I'm firing", results);
+      createProjectThumbnail();
+      loadOptions();
     })
     .catch( error => {
       console.log('request failed', error);
     })
     $('#project-name').val('');
-    createProjectThumbnail();
-    loadOptions();
   }
 }
 
