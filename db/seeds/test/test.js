@@ -8,8 +8,6 @@ exports.seed = function (knex, Promise) {
     // Now that we have a clean slate, we can re-insert our projects data
     .then(() => {
       return Promise.all([
-
-        // Insert a single project, return the project ID, insert 1 palette
         knex('projects').insert({ project_name: 'Project 1' }, 'id')
           .then(project => {
             return knex('palettes').insert([

@@ -50,7 +50,7 @@ const displayProjectThumbnails = (event) => {
 }
 
 const deletePalette = async (event) => {
-  const paletteId = event.target.value
+  const paletteId = event.target.value;
 
   await fetch(`/api/v1/palettes/${paletteId}`, {
     method: 'DELETE'
