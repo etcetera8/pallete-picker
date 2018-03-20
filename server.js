@@ -5,6 +5,8 @@ const app = express();
 const bodyParser = require('body-parser');
 
 const environment = process.env.NODE_ENV || 'development';
+
+
 const configuration = require('./knexfile')[environment];
 const database = require('knex')(configuration);
 
@@ -12,6 +14,13 @@ app.set('port', process.env.PORT || 3000);
 app.use(bodyParser.json());
 app.use(express.static('public'));
 
+app.use(function (req, res, next) {
+  if (req.header('x-forwarded-proto') !== 'https') {
+    res.redirect('https://' + req.header('host') + req.url);
+  } else {
+    next();
+  }
+})
 
 
 app.get('/api/v1/projects', (request, response) => {
