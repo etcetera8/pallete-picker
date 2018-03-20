@@ -2,7 +2,6 @@ import { read } from 'fs';
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
-app.enable('trust proxy');
 
 const environment = process.env.NODE_ENV || 'development';
 
@@ -13,6 +12,7 @@ const database = require('knex')(configuration);
 app.set('port', process.env.PORT || 3000);
 app.use(bodyParser.json());
 app.use(express.static('public'));
+app.enable('trust proxy');
 
 app.use(function (req, res, next) {
   if (req.header('x-forwarded-proto') !== 'https') {
