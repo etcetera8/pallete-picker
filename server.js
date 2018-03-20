@@ -9,18 +9,19 @@ const environment = process.env.NODE_ENV || 'development';
 const configuration = require('./knexfile')[environment];
 const database = require('knex')(configuration);
 
+const httpsRedirect = (req, res, next) => {
+  if(req.protocol !== 'https://' && environment === 'production') {
+    res.redirect('https://' + req.headers.host + req.path)
+  }
+  next()
+}
+
+
 app.set('port', process.env.PORT || 3000);
 app.use(bodyParser.json());
 app.use(express.static('public'));
-app.enable('trust proxy');
+app.use(httpsRedirect)
 
-app.use(function (req, res, next) {
-  if (req.header('x-forwarded-proto') !== 'https') {
-    res.redirect('https://' + req.header('host') + req.url);
-  } else {
-    next();
-  }
-})
 
 app.get('/api/v1/projects', (request, response) => {
   database('projects').select()
